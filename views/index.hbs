@@ -1,0 +1,26 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<textarea id="chatbox"></textarea>
+
+<br/>
+<input id="username"/><input id="chat_msg"/>
+<button id="submit" onclick="send()"></button>
+
+<script>
+    function send() {
+        var input = document.getElementById("chat_msg").value;
+        var userInput = document.getElementById("username").value;
+        var reqURL = "http://localhost/send/" + userInput + "-" + input;
+        fetch(reqURL);
+    }
+
+    (() => {
+        var intervalID = setInterval(() => {
+            fetch("http://localhost/get").then(result => {
+                result.text().then(text => {
+                    document.getElementById("chatbox").value = text;
+                })
+            })
+        }, 2000, 'Parameter 1', 'Parameter 2');
+    })()
+</script>
